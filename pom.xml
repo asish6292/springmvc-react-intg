@@ -60,6 +60,12 @@
 		</dependency>
 	</dependencies>
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering> <!-- Enables filtering of Maven properties -->
+			</resource>
+		</resources>
 		<plugins>
 			<!-- Compiler plugin to specify Java version -->
 			<plugin>
@@ -145,7 +151,7 @@
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${project.build.outputDirectory}/static</outputDirectory>
+							<outputDirectory>${project.build.outputDirectory}/${project.artifactId}-${project.version}/static</outputDirectory>
 							<resources>
 								<resource>
 									<directory>${project.basedir}/frontend/build</directory>
