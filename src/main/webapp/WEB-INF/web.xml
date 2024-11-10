@@ -14,24 +14,25 @@
         </init-param>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>com.akm.config.WebConfig</param-value> <!-- Your Java config class -->
+            <param-value>com.akm.config.WebConfig</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
+    <!-- Map all requests to DispatcherServlet -->
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-    <!-- Welcome file to load by default -->
+    <!-- Welcome file to load index.html by default -->
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>  <!-- React's index.html -->
+        <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 
     <!-- 404 Error handling -->
-    <error-page>
+ <!--    <error-page>
         <error-code>404</error-code>
-        <location>/static/index.html</location>  <!-- Handle with React -->
-    </error-page>
+        <location>/myindex.html</location>  Handle with React
+    </error-page> -->
 </web-app>

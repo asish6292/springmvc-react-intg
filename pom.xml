@@ -63,7 +63,7 @@
 	<build>
 		<resources>
 			<resource>
-				<directory>src/main/resources</directory>
+				<directory>${project.basedir}/src/main/resources</directory>
 				<filtering>true</filtering> <!-- Enables filtering of Maven properties -->
 			</resource>
 		</resources>
@@ -136,7 +136,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<workingDirectory>frontend</workingDirectory>
+					<workingDirectory>${project.basedir}/src/main/frontend</workingDirectory>
 				</configuration>
 			</plugin>
 
@@ -155,7 +155,7 @@
 							<outputDirectory>${project.build.outputDirectory}/static</outputDirectory>
 							<resources>
 								<resource>
-									<directory>${project.basedir}/frontend/build</directory>
+									<directory>${project.basedir}/src/main/frontend/build</directory>
 									<includes>
 										<include>**/*</include>
 									</includes>
@@ -176,7 +176,7 @@
 					<outputDirectory>${project.build.directory}</outputDirectory>
 					<webResources>
 						<resource>
-							<directory>${project.basedir}/frontend/build</directory>
+							<directory>${project.basedir}/src/main/frontend/build</directory>
 							<targetPath>static</targetPath>  <!-- Copy React build output to static folder -->
 							<includes>
 								<include>**/*</include>
