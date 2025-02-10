@@ -1,14 +1,17 @@
 package com.akm.config;
 
-import org.springframework.beans.factory.annotation.Value;
+import java.io.IOException;
+
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.resource.PathResourceResolver;
+
 
 @Configuration
 @EnableWebMvc
@@ -16,36 +19,20 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @PropertySource("classpath:application.properties")
 public class WebConfig implements WebMvcConfigurer {
 
-	@Value("${project.version}")
-	private String projectVersion;
-
-	@Value("${project.artifactId}")
-	private String projectArtifactId;
-
-	// CORS configuration for API requests
-	@Override
-	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/api/**").allowedOrigins("http://localhost:3000") // React dev server
-				.allowedMethods("GET", "POST", "PUT", "DELETE").allowedHeaders("*");
-	}
-
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		// Serve all static content in the static folder for any path
-		registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
-	}
-	
-	@Override
-    public void configureViewResolvers(ViewResolverRegistry registry) {
-        // Avoid treating index.html as a Thymeleaf or JSP view
-        registry.enableContentNegotiation();
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/**")
+                .addResourceLocations("classpath:/static/")
+                .resourceChain(false)
+                .addResolver(new PathResourceResolver() {
+                    @Override
+                    protected Resource getResource(String resourcePath, Resource location) throws IOException {
+                        Resource requestedResource = location.createRelative(resourcePath);
+                        System.out.println("**Resolved resource "+requestedResource);
+                        return (requestedResource.exists() && requestedResource.isReadable()) 
+                                ? requestedResource 
+                                : new ClassPathResource("/static/index.html");
+                    }
+                });
     }
-
-//	@Override
-//	public void addViewControllers(ViewControllerRegistry registry) {
-//		// Forward non-API paths to index.html
-//		registry.addViewController("/{spring:[^.]*}").setViewName("forward:/index.html");
-//		registry.addViewController("/**/{spring:[^.]*}").setViewName("forward:/index.html");
-//		registry.addViewController("/{spring:^(?!api$).*$}/**/{spring:[^.]*}").setViewName("forward:/index.html");
-//	}
 }

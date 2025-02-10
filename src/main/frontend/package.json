@@ -9,12 +9,14 @@
     "@testing-library/user-event": "^13.5.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-router-dom": "^7.1.5",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "cross-env REACT_APP_CONTEXT_PATH=/springmvc-react-intg react-scripts start",
+    "build-local": "node set-homepage.js /springmvc-react-intg && cross-env REACT_APP_CONTEXT_PATH=/springmvc-react-intg react-scripts build",
+    "build-remote": "node set-homepage.js / && cross-env REACT_APP_CONTEXT_PATH=/ react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -35,5 +37,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }

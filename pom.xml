@@ -131,7 +131,7 @@
 							<goal>npm</goal>
 						</goals>
 						<configuration>
-							<arguments>run build</arguments>
+							<arguments>run build-local</arguments>
 						</configuration>
 					</execution>
 				</executions>
